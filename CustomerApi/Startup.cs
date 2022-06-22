@@ -33,10 +33,10 @@ namespace CustomerApi
                 //x.AddConsumer<WithdrawCustomerCreditConsumer>();
                 x.AddConsumers(Assembly.GetExecutingAssembly());
                 x.SetKebabCaseEndpointNameFormatter();
-                x.UsingRabbitMq((context, cfg) =>
+                x.UsingAzureServiceBus((context, cfg) =>
                 {
                     cfg.ConfigureEndpoints(context);
-                    
+                    cfg.Host("conection");
                 });
             });
             services.AddMassTransitHostedService();

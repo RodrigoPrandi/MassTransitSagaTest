@@ -39,9 +39,10 @@ namespace ProductApi
                 //x.AddConsumer<TakeProductConsumer>();
                 x.AddConsumers(Assembly.GetExecutingAssembly());
                 x.SetKebabCaseEndpointNameFormatter();
-                x.UsingRabbitMq((context, cfg) =>
+                x.UsingAzureServiceBus((context, cfg) =>
                 {
                     cfg.ConfigureEndpoints(context);
+                    cfg.Host("connection");
                 });
             });
             services.AddMassTransitHostedService();

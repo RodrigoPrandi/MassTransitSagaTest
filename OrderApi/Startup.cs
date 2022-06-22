@@ -47,16 +47,10 @@ namespace OrderApi
                 .InMemoryRepository();
                 x.AddSagaStateMachine<OrderCourierStateMachine, OrderTransactionState>()
                 .InMemoryRepository();
-                x.UsingRabbitMq((context, cfg) =>
+                x.UsingAzureServiceBus((context, cfg) =>
                 {
                     cfg.ConfigureEndpoints(context);                    
-                    cfg.Host(massTransitConfig.Host, massTransitConfig.VirtualHost,
-                        h =>
-                        {
-                            h.Username(massTransitConfig.Username);
-                            h.Password(massTransitConfig.Password);
-                        }
-                    );
+                    cfg.Host(massTransitConfig.Host);
                 });
             });
             services.AddMassTransitHostedService();
